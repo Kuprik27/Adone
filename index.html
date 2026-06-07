@@ -1176,6 +1176,7 @@
     });
     // Google Apps Script web app URL (see scripts/LEADS-SETUP.md)
     const LEADS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxmf9NJOKgptrdl3F1TfVbq1O6JR7KAkS5Ayd8IZQKqqXqT8YgaHXk2Ahfc3FlRNH0/exec';
+        const GOOGLE_ADS_CONVERSION_SEND_TO = 'AW-18221234694/x-VtCOX6vrocEIb0x_BD';
 
     let preferredMessenger = 'telegram';
 
@@ -1252,6 +1253,13 @@
         launchForm.reset();
         document.querySelector('.messengers .msg-tg')?.click();
         showFormNote('Thank you! We received your request and will reply within 24 hours.', 'success');
+                if (typeof gtag === 'function') {
+          gtag('event', 'conversion', {
+            send_to: GOOGLE_ADS_CONVERSION_SEND_TO,
+            value: 1.0,
+            currency: 'GBP'
+          });
+        }
       } catch (err) {
         showFormNote('Could not send the form. Please message us on Telegram or WhatsApp.', 'error');
       } finally {
